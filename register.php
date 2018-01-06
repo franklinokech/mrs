@@ -11,7 +11,31 @@ require_once("controllers/functions.php");
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/my-login.css">
 	<link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon"/>
-
+	<script src="bootstrap/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.chk1').change(function () {
+                if ($(this).is(":checked")) {
+                    $('#submit').removeAttr('disabled');
+                }
+                else {
+                    var isChecked = false;
+                    $('.chk1').each(function () {
+                        if ($(this).is(":checked")) {
+                            $('#submit').removeAttr('disabled');
+                            isChecked = true;
+                        }
+                    });
+                    if (!isChecked) {
+                        $('#submit').attr('disabled', 'disabled');
+                    }
+                }
+ 
+ 
+            })
+        });
+    </script>
+							
 </head>
 <body class="my-login-page">
 	<section class="h-100">
@@ -47,6 +71,11 @@ require_once("controllers/functions.php");
 								</div>
 
 								<div class="form-group">
+									<label for="email">Postal Address</label>
+									<textarea class="form-control" id="postalAddress" name="postalAddress"></textarea>
+								</div>
+
+								<div class="form-group">
 									<label for="password">Password</label>
 									<input id="password" type="password" class="form-control" name="password" required data-eye>
 								</div>
@@ -55,15 +84,16 @@ require_once("controllers/functions.php");
 									<label for="cpassword">Confirm Password</label>
 									<input id="cpassword" type="password" class="form-control" name="cpassword" required data-eye>
 								</div>
-
+								
+								
 								<div class="form-group">
 									<label>
-										<input type="checkbox" name="aggree" value="1"> I agree to the Terms and Conditions
+										<input type="checkbox" class="chk1"  id="agree" name="aggree" value="1"> I agree to the Terms and Conditions
 									</label>
 								</div>
 
 								<div class="form-group no-margin">
-									<button type="submit" class="btn btn-primary btn-block">
+									<button type="submit" id="submit" disabled="disabled" name="submit" class="btn btn-primary btn-block">
 										Register
 									</button>
 								</div>
@@ -81,8 +111,8 @@ require_once("controllers/functions.php");
 		</div>
 	</section>
 
-	<script src="js/jquery.min.js"></script>
+	
 	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src="js/my-login.js"></script>
+	<script src="bootstrap/js/my-login.js"></script>
 </body>
 </html>
