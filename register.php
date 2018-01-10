@@ -11,8 +11,11 @@ require_once("controllers/functions.php");
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/my-login.css">
 	<link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon"/>
+  <link rel="stylesheet" type="text/css" href="resources/datepicker/datepicker.css">
+  <script src="resources/datepicker/datepicker.js"></script>
 	<script src="bootstrap/js/jquery.min.js"></script>
     <script type="text/javascript">
+    //function to disable submit button until the user checked the agreement box
         $(function () {
             $('.chk1').change(function () {
                 if ($(this).is(":checked")) {
@@ -34,6 +37,65 @@ require_once("controllers/functions.php");
  
             })
         });
+
+        //function to check password meter
+        $(function () {
+        $("#password").bind("keyup", function () {
+            //TextBox left blank.
+            if ($(this).val().length == 0) {
+                $("#password_strength").html("");
+                return;
+            }
+ 
+            //Regular Expressions.
+            var regex = new Array();
+            regex.push("[A-Z]"); //Uppercase Alphabet.
+            regex.push("[a-z]"); //Lowercase Alphabet.
+            regex.push("[0-9]"); //Digit.
+            regex.push("[$@$!%*#?&]"); //Special Character.
+ 
+            var passed = 0;
+ 
+            //Validate for each Regular Expression.
+            for (var i = 0; i < regex.length; i++) {
+                if (new RegExp(regex[i]).test($(this).val())) {
+                    passed++;
+                }
+            }
+ 
+ 
+            //Validate for length of Password.
+            if (passed > 2 && $(this).val().length > 8) {
+                passed++;
+            }
+ 
+            //Display status.
+            var color = "";
+            var strength = "";
+            switch (passed) {
+                case 0:
+                case 1:
+                    strength = "Weak";
+                    color = "red";
+                    break;
+                case 2:
+                    strength = "Good";
+                    color = "darkorange";
+                    break;
+                case 3:
+                case 4:
+                    strength = "Strong";
+                    color = "green";
+                    break;
+                case 5:
+                    strength = "Very Strong";
+                    color = "darkgreen";
+                    break;
+            }
+            $("#password_strength").html(strength);
+            $("#password_strength").css("color", color);
+        });
+    });
     </script>
 							
 </head>
@@ -48,7 +110,7 @@ require_once("controllers/functions.php");
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Patient Registration </h4>
-							<form method="POST">
+							<form method="POST" action="controllers/processregisterpatient.php">
 
 								<div class="form-group">
 									<label for="fname">First Name</label>
@@ -70,6 +132,16 @@ require_once("controllers/functions.php");
 									<input id="email" type="email" class="form-control" name="email" required>
 								</div>
 
+                <div class="form-group">
+                  <label for="email">Date Of Birth</label>
+                  <input id="dob" type="text" class="form-control datepicker" name="dob" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="mobilephone">Phone Number</label>
+                  <input id="mobilephone" type="text" class="form-control" name="mobilephone" required>
+                </div>
+
 								<div class="form-group">
 									<label for="email">Postal Address</label>
 									<textarea class="form-control" id="postalAddress" name="postalAddress"></textarea>
@@ -79,7 +151,7 @@ require_once("controllers/functions.php");
 									<label for="password">Password</label>
 									<input id="password" type="password" class="form-control" name="password" required data-eye>
 								</div>
-
+                 <span id="password_strength"></span> 
 								<div class="form-group">
 									<label for="cpassword">Confirm Password</label>
 									<input id="cpassword" type="password" class="form-control" name="cpassword" required data-eye>

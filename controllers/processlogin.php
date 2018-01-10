@@ -24,7 +24,7 @@
         $adminPass=$row['password'];
         if(password_verify($password,$adminPass)){
           $_SESSION['admiSsn']=$admiSsn;
-          header('location:../views/admin/admindashboard.php');
+          header('location:../views/admin/');
         }//end of valid admin credentials
         else{
           echo "Invalid Username Or Password";

@@ -19,17 +19,3 @@ if (isset($_POST['btnregister'])) {
 
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
- <form method="POST" action="">
-   Name<input type="text" name="dname"><br>
-   Age<input type="text" name="dage"><br>
-   <input type="submit" name="btnregister" value="Submit">
- </form>
-</body>
-</html

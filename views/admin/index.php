@@ -40,7 +40,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>K</b>MRS</span>
       <!-- logo for regular state and mobile devices -->
@@ -117,7 +117,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Register Doctor</a></li>
+            <li class="active"><a href="registerDoctor.php"><i class="fa fa-circle-o"></i> Register Doctor</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Register Patient</a></li><li><a href="#"><i class="fa fa-circle-o"></i> Register Hospital</a></li><li><a href="#"><i class="fa fa-circle-o"></i> Register Manufacturer</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Add Medicine</a></li>
           </ul>
@@ -183,7 +183,7 @@
         <small>transforming healthcare</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
       </ol>
     </section>
