@@ -1,6 +1,18 @@
+<?php 
+  session_start();
+if (isset($_SESSION['admiSsn'])) {
+ 
+}else{
+  header('location:../../index.php');
+}
+  require_once('../../configs/dbConfig.php');
+  require_once('../../controllers/functions.php');
+  
+?>
 <!DOCTYPE html>
 <html>
 <head>
+  <title><?php titlePrefix();?>Register Doctor</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
@@ -34,8 +46,11 @@
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+
 <div class="wrapper">
 
 <!-- Favicon Link-->
@@ -66,7 +81,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Franklin Ochieng</span>
+              <span class="hidden-xs"><?php echo $_SESSION['adminUsername'];?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -103,7 +118,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Franklin Ochieng</p>
+          <p><?php echo $_SESSION['adminUsername'];?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -122,7 +137,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Register Doctor</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Register Patient</a></li><li><a href="#"><i class="fa fa-circle-o"></i> Register Hospital</a></li><li><a href="#"><i class="fa fa-circle-o"></i> Register Manufacturer</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Register Patient</a></li><li><a href="registerHealthFacility.php"><i class="fa fa-circle-o"></i> Register Hospital</a></li><li><a href="#"><i class="fa fa-circle-o"></i> Register Manufacturer</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Add Medicine</a></li>
           </ul>
         </li>
@@ -196,7 +211,7 @@
     <section class="content">
       <div class="container">
 
-    <form class="well form-horizontal" action=" " method="post"  id="frmRegisterDoc" name="frmRegisterDoc">
+    <form class="well form-horizontal" action="" method="POST"  id="frmRegisterDoc" name="frmRegisterDoc" method="POST">
 <fieldset>
 
 <!-- Form Name -->
@@ -252,6 +267,30 @@
 
 <!-- Text input-->
 
+<div class="form-group"> 
+  <label class="col-md-4 control-label">Gender</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+    <select name="cmbGender" id="cmbGender" class="form-control selectpicker">
+      <option value="">Select Gender</option>
+      <?php 
+        $sql="SELECT `Gender_id`, `Gender_name` FROM `Gender` ";
+        $query_run=mysqli_query($conn,$sql);
+        while ($row=mysqli_fetch_assoc($query_run)) {
+          $genderId=$row['Gender_id'];
+          $genderName=$row['Gender_name'];
+          ?>
+          <option value="<?php echo $genderId;?>"><?php echo $genderName;?></option>
+          <?php
+        }
+      ?> 
+      
+    </select>
+  </div>
+</div>
+</div>
+
 <div class="form-group">
   <label class="col-md-4 control-label" >Phone Number</label> 
     <div class="col-md-4 inputGroupContainer">
@@ -286,16 +325,49 @@
   </div>
 </div>
 
-
-
-
-  <div class="form-group"> 
-  <label class="col-md-4 control-label">Department / Office</label>
+<div class="form-group"> 
+  <label class="col-md-4 control-label">City / Town</label>
     <div class="col-md-4 selectContainer">
     <div class="input-group">
         <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-    <select name="txtOffice" id="txtOffice" class="form-control selectpicker">
-      <option value="">Select Department/Office</option>
+    <select name="txtCity" id="txtCity" class="form-control selectpicker">
+      <option value="">Select City/Town</option>
+      <?php 
+        $sql="SELECT `Postal_Code`, `City_Name` FROM `City` ORDER BY City.City_Name ";
+        $query_run=mysqli_query($conn,$sql);
+        while ($row=mysqli_fetch_assoc($query_run)) {
+          $cityCode=$row['Postal_Code'];
+          $cityName=$row['City_Name'];
+          ?>
+          <option value="<?php echo $cityCode;?>"><?php echo $cityName;?></option>
+          <?php
+        }
+      ?> 
+      
+    </select>
+  </div>
+</div>
+</div>
+
+
+  <div class="form-group"> 
+  <label class="col-md-4 control-label">Department</label>
+    <div class="col-md-4 selectContainer">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+    <select name="cmbDepartment" id="cmbDepartment" class="form-control selectpicker">
+      <option value="">Select Department</option>
+      <?php 
+        $sql="SELECT `Dept_Id`, `Dept_Name` FROM `Departments`ORDER BY Departments.Dept_Name ";
+        $query_run=mysqli_query($conn,$sql);
+        while ($row=mysqli_fetch_assoc($query_run)) {
+          $deptId=$row['Dept_Id'];
+          $deptName=$row['Dept_Name'];
+          ?>
+          <option value="<?php echo $deptId;?>"><?php echo $deptName;?></option>
+          <?php
+        }
+      ?> 
       
     </select>
   </div>
@@ -304,15 +376,21 @@
   
 
 
+
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label"></label>
   <div class="col-md-4"><br>
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-success" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-success" name="btnAddDoctor" id="btnAddDoctor" onclick="return getFormdata()">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
   </div>
 </div>
 
 </fieldset>
+
+<!-- Paragraph to output the success message -->
+<p id="msg"></p>
+
+<!-- Footer element -->
 </form>
 </div>
     </div><!-- /.container -->
@@ -362,3 +440,35 @@
 <script src="dist/js/demo.js"></script>
 </body>
 </html>
+<!-- Jquery script to ajax the user inputs  -->
+          <script type="text/javascript">
+          /*Function to get user inputs. Called when user click submit button*/
+    function getFormdata()
+    {
+      var txtDoctID=document.getElementById('txtDoctID').value;
+      var txtFname=document.getElementById('txtFname').value;
+      var txtLname=document.getElementById('txtLname').value;
+      var txtDOB=document.getElementById('txtDOB').value;
+      var cmbGender=document.getElementById('cmbGender').value;
+      var txtPhone=document.getElementById('txtPhone').value;
+      var txtEmail=document.getElementById('txtEmail').value;
+      var txtPostalAddress=document.getElementById('txtPostalAddress').value;
+      var txtCity=document.getElementById('txtCity').value;
+      var cmbDepartment=document.getElementById('cmbDepartment').value;
+      var dataString='txtDoctID='+ txtDoctID+'&txtFname='+txtFname+'&txtLname='+txtLname+'&txtDOB='+txtDOB+'&cmbGender='+cmbGender+'&txtPhone='+txtPhone+'&txtEmail='+txtEmail+'&txtPostalAddress='+txtPostalAddress+'&txtCity='+txtCity+'&cmbDepartment='+cmbDepartment;
+
+      /*Ajaxing the user inputs to be process by php*/
+      $.ajax({
+        type:"POST",
+        url:"../../controllers/admin/processRegisterDoctor.php",
+        data:dataString,
+        cache:false,
+        success:function(html){
+         /* Echo the php success feedback to the paragraph id msg*/
+          $('#msg').html(html);
+        }
+      });
+      return false;
+    }
+  </script>
+        <!-- End of Jquery Script to ajax user inputs -->

@@ -1,6 +1,6 @@
 <?php
 //error_reporting(0);
-session_start();
+
 $servername = $_SERVER['HTTP_HOST'];
 
 $username = "root";
@@ -17,6 +17,9 @@ if (!($conn) OR !($dB_select)) {
     die("Connection failed: " . mysqli_connect_error());
 }
 //echo "Connected successfully";
+//PDO connection
+$conn2 = new PDO('mysql:host=localhost;dbname=mrs', $username, $password);
 
-
+        
+        
 ?>

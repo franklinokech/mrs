@@ -29,7 +29,7 @@ require_once('controllers/functions.php');
 								<div class="form-group">
 									<label for="email">Username</label>
 
-									<input id="Username" type="text" class="form-control" name="Username" value="" required autofocus>
+									<input id="Username" type="text" class="form-control" name="Username" value="" required autofocus tabindex="1">
 								</div>
 
 								<div class="form-group">
@@ -38,7 +38,7 @@ require_once('controllers/functions.php');
 											Forgot Password?
 										</a>
 									</label>
-									<input id="password" type="password" class="form-control" name="password" required >
+									<input id="password" type="password" class="form-control" name="password" required tabindex="2">
 								</div>
 
 								<div class="form-group">
@@ -48,7 +48,7 @@ require_once('controllers/functions.php');
 								</div>
 
 								<div class="form-group no-margin">
-									<button type="submit" class="btn btn-primary btn-block" name="submit">
+									<button type="submit" class="btn btn-primary btn-block" name="submit" tabindex="3">
 										Login
 									</button>
 								</div>

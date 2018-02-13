@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require_once('functions.php');
   require_once('../configs/dbConfig.php');
   require_once('../configs/security.php');
@@ -18,12 +19,14 @@
     $num_rows=mysqli_num_rows($query_run);
 
     if ($num_rows==1) {
-      while ($row=mysqli_fetch_assoc($query_run)) {
-        $adminSsn=$row['a_ssn'];
-        $adminUsername=$row['username'];
-        $adminPass=$row['password'];
+      while ($rowAdmin=mysqli_fetch_assoc($query_run)) {
+        $adminSsn=$rowAdmin['a_ssn'];
+        $adminUsername=$rowAdmin['username'];
+        $adminPass=$rowAdmin['password'];
         if(password_verify($password,$adminPass)){
-          $_SESSION['admiSsn']=$admiSsn;
+
+           $_SESSION["admiSsn"]=$adminSsn;
+           $_SESSION['adminUsername']=$adminUsername;
           header('location:../views/admin/');
         }//end of valid admin credentials
         else{
